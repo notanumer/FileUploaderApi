@@ -1,4 +1,5 @@
 ﻿using FileUploader.UseCases.FileGroups.FileGroupGetFileProgress;
+using FileUploader.UseCases.FileGroups.FileGroupsDownload;
 using FileUploader.UseCases.FileGroups.FileGroupsGetAllProgress;
 using FileUploader.UseCases.FileGroups.FileGroupsGetUploaded;
 using FileUploader.UseCases.FileGroups.FileGroupsGetUploaded.FileGroupsGetUploadedDto;
@@ -44,5 +45,13 @@ public class FileGroupController : Controller
     public async Task<ICollection<FileGroupDto>> GetUploadedFileGroups(CancellationToken cancellationToken = default)
     {
         return await mediator.Send(new FileGroupsGetUploadedQuery(), cancellationToken);
+    }
+
+    [Authorize]
+    [HttpGet("download/{id:int}")]
+    public async Task<IActionResult> DownloadOwnFileGroup([FromRoute] int id, CancellationToken cancellationToken = default)
+    {
+        var content = await mediator.Send(new FileGroupsDownloadQuery(id), cancellationToken);
+        return File(content.ContentStream.ToArray(), content.ContentType, content.ContentName);
     }
 }
