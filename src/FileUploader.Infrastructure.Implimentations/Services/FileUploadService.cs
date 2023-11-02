@@ -60,12 +60,12 @@ public class FileUploadService : IUploadFilesService
         int bytesRead;
         long totalFileBytesRead = 0;
         long fileContentLength = file.Length;
-        while ((bytesRead = fileContentStream.Read(buffer, 0, buffer.Length)) > 0)
+        while ((bytesRead = await fileContentStream.ReadAsync(buffer, cancellationToken)) > 0)
         {
-            fileStream.Write(buffer, 0, bytesRead);
+            await fileStream.WriteAsync(buffer.AsMemory(0, bytesRead), cancellationToken);
             totalFileBytesRead += bytesRead;
             fileUploadProgress[$"{userId}@{fileName}"] = (double)totalFileBytesRead / fileContentLength * 100;
-            await Task.Delay(50, cancellationToken); // I used it for demonstartion.
+            // await Task.Delay(50, cancellationToken); // I used it for demonstartion.
         }
 
         return filePath;
