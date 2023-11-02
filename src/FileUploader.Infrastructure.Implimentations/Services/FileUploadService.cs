@@ -7,7 +7,8 @@ public class FileUploadService : IUploadFilesService
 {
     private readonly Dictionary<string, double> fileUploadProgress = new();
 
-    public string StoragePath => $"Storage{Path.DirectorySeparatorChar}UsersFiles{Path.DirectorySeparatorChar}";
+    public string StoragePath
+        => Path.Combine(Path.GetTempPath(), "Storage", "UsersFiles");
 
     public void ClearFileUploadProgress()
     {
@@ -44,7 +45,7 @@ public class FileUploadService : IUploadFilesService
 
     public async Task<string> UploadUserFileAsync(IFormFile file, int userId, CancellationToken cancellationToken)
     {
-        var dir = $"Storage{Path.DirectorySeparatorChar}UsersFiles{Path.DirectorySeparatorChar}{userId}";
+        var dir = Path.Combine(StoragePath, $"user-{userId}");
         if (!Directory.Exists(dir))
         {
             Directory.CreateDirectory(dir);

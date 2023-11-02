@@ -37,7 +37,7 @@ internal class UploadFileGroupCommandHandler : IRequestHandler<UploadFileGroupCo
             var filePathLocal = await uploadFilesService.UploadUserFileAsync(file, userId, cancellationToken);
             var userFile = new Domain.File()
             {
-                Name = file.Name,
+                Name = file.FileName,
                 Type = file.ContentType,
                 Path = filePathLocal
             };

@@ -1,5 +1,7 @@
 ﻿using FileUploader.UseCases.FileGroups.FileGroupGetFileProgress;
 using FileUploader.UseCases.FileGroups.FileGroupsGetAllProgress;
+using FileUploader.UseCases.FileGroups.FileGroupsGetUploaded;
+using FileUploader.UseCases.FileGroups.FileGroupsGetUploaded.FileGroupsGetUploadedDto;
 using FileUploader.UseCases.FileGroups.FileGroupsUpload;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
@@ -35,5 +37,12 @@ public class FileGroupController : Controller
         }
 
         return await mediator.Send(new FileGroupGetFileProgressQuery(fileName), cancellationToken);
+    }
+
+    [Authorize]
+    [HttpGet("uploaded")]
+    public async Task<ICollection<FileGroupDto>> GetUploadedFileGroups(CancellationToken cancellationToken = default)
+    {
+        return await mediator.Send(new FileGroupsGetUploadedQuery(), cancellationToken);
     }
 }
