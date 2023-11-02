@@ -11,5 +11,6 @@ internal static class ApplicationModule
         services.AddHttpContextAccessor();
         services.AddScoped<ILoggedUserAccessor, LoggedUserAccessor>();
         services.AddSingleton<IUploadFilesService, FileUploadService>();
+        services.AddScoped<IDownloadFilesService, DownloadFilesService>();
     }
 }

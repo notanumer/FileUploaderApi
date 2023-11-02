@@ -6,7 +6,7 @@ public class FileGroup
 
     public DateTimeOffset CreatedAt { get; set; }
 
-    public Guid? Token { get; set; }
+    public string? Token { get; set; }
 
     public DateTimeOffset? DownloadedByTokenAt { get; set; }
 

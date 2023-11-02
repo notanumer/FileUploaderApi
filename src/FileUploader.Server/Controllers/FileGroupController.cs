@@ -1,5 +1,7 @@
 ﻿using FileUploader.UseCases.FileGroups.FileGroupGetFileProgress;
 using FileUploader.UseCases.FileGroups.FileGroupsDownload;
+using FileUploader.UseCases.FileGroups.FileGroupsDownloadByToken;
+using FileUploader.UseCases.FileGroups.FileGroupsGenerateDownloadLink;
 using FileUploader.UseCases.FileGroups.FileGroupsGetAllProgress;
 using FileUploader.UseCases.FileGroups.FileGroupsGetUploaded;
 using FileUploader.UseCases.FileGroups.FileGroupsGetUploaded.FileGroupsGetUploadedDto;
@@ -52,6 +54,22 @@ public class FileGroupController : Controller
     public async Task<IActionResult> DownloadOwnFileGroup([FromRoute] int id, CancellationToken cancellationToken = default)
     {
         var content = await mediator.Send(new FileGroupsDownloadQuery(id), cancellationToken);
+        return File(content.ContentStream.ToArray(), content.ContentType, content.ContentName);
+    }
+
+    [Authorize]
+    [HttpGet("generate/{id:int}/link")]
+    public async Task<string> GetFileDownloadLink([FromRoute] int id, CancellationToken cancellationToken = default)
+    {
+        var fileGroupLink = await mediator.Send(new FileGroupsGenerateDownloadLinkQuery(id), cancellationToken);
+        return fileGroupLink;
+    }
+
+    [AllowAnonymous]
+    [HttpGet("{token}/download")]
+    public async Task<IActionResult> DownloadFileGroupByLink([FromRoute] string token, CancellationToken cancellationToken = default)
+    {
+        var content = await mediator.Send(new FileGroupsDownloadByTokenQuery(token), cancellationToken);
         return File(content.ContentStream.ToArray(), content.ContentType, content.ContentName);
     }
 }
