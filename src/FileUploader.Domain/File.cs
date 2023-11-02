@@ -8,7 +8,7 @@ public class File
 
     required public string Type { get; set; }
 
-    required public byte[] Data { get; set; }
+    required public string Path { get; set; }
 
     public int FileGroupId { get; set; }
 

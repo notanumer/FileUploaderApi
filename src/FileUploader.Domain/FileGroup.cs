@@ -10,7 +10,7 @@ public class FileGroup
 
     public DateTimeOffset? DownloadedByTokenAt { get; set; }
 
-    public int CreatedByUserId { get; private set; }
+    public int CreatedByUserId { get; set; }
 
     public User? CreatedByUser { get; set; }
 

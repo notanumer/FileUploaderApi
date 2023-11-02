@@ -42,5 +42,7 @@ internal class SwaggerGenOptionsSetup
                 new List<string>()
             }
         });
+
+        options.OperationFilter<SwaggerFileOperationFilter>();
     }
 }

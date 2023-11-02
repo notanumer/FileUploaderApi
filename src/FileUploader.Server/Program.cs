@@ -30,6 +30,8 @@ AutoMapperModule.Register(builder.Services);
 // MediatR.
 MediatRModule.Register(builder.Services);
 
+ApplicationModule.Register(builder.Services);
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
