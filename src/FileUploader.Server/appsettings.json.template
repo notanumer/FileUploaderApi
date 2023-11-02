@@ -1,0 +1,6 @@
+{
+  "ConnectionStrings": {
+    "AppDatabase": "Server={{$.db_host}};Database={{$.db_name}};Uid={{$.db_user}};Pwd={{$.db_password}};"
+  },
+  "ServerUrl": "{{$.application_host}}"
+}
